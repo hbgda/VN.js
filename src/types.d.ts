@@ -7,3 +7,8 @@ interface SceneInitOptions {
 interface ImageState {
     default: string
 }
+
+interface Component {
+    html: string,
+    style: string,
+}
