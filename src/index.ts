@@ -4,7 +4,7 @@ async function start() {
     const x = new Scene({
         height: 1080,
         width: 1920,
-        backgroundColor: "red"
+        backgroundColor: "white"
     })
     await x.init()
 }
