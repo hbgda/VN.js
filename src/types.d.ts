@@ -3,7 +3,3 @@ interface SceneInitOptions {
     width: number,
     backgroundColor?: string
 }
-
-interface ImageState {
-    default: string
-}
