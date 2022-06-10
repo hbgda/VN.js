@@ -21,10 +21,12 @@ export class Scene {
                 frame: false,
                 backgroundColor: this.backgroundColor,
                 webPreferences: {
-                    preload: path.join(__dirname, "electron", "preload.js")
+                    preload: path.join(__dirname, "electron", "preload.js"),
+                    devTools: true
                 }
             })
             win.setTitle("VN.js")
+            win.loadFile("html/pages/Menu/menu.html")
             this.electronInstance = win
         })
     }

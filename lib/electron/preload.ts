@@ -1,4 +1,10 @@
 // Node and browser
-import { loadComponent } from '../../src/html/scripts/loader'
+import { loadComponent } from '../../html/scripts/loader'
+import { TextBox } from '../../html/components/TextBox/TextBox' 
 
-window["loadComponent"] = loadComponent
+window.addEventListener("DOMContentLoaded", () => {
+    const t = new TextBox(document.body)
+    t.setText("Ligma", [
+        "Ligma balls lmao fucking idiot"
+    ])
+})
