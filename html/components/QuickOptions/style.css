@@ -1,0 +1,28 @@
+.quick-options {
+    width: 60%;
+    background-color: rgba(0, 0, 0, .7);
+    border-radius: 15px;
+    height: 30px;
+    position: absolute;
+    bottom: 5px;
+    left: 50%;
+    transform: translateX(-50%);
+    align-items: center;
+    text-align: center;
+    user-select: none;
+}
+
+.quick-options button {
+    background-color: transparent;
+    outline: none;
+    border: none;
+    color: white;
+    opacity: .8;
+    height: 100%;
+    width: 50px;
+    margin: 0 12.5px
+}
+.quick-options button:hover {
+    opacity: 1;
+    cursor: pointer;
+}

@@ -20,6 +20,7 @@ export class Scene {
                 width: this.width,
                 frame: false,
                 backgroundColor: this.backgroundColor,
+                resizable: false,
                 webPreferences: {
                     preload: path.join(__dirname, "electron", "preload.js"),
                     devTools: true
