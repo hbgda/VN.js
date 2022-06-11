@@ -1,8 +1,8 @@
 <div class="quick-options interactable">
-    <button>Menu</button>
-    <button>Prefs</button>
-    <button>Back</button>
-    <button>Save</button>
-    <button>Load</button>
+    <button onClick="document.dispatchEvent(new CustomEvent('menu_clicked'))">Menu</button>
+    <button onClick="document.dispatchEvent(new CustomEvent('prefs_clicked'))">Prefs</button>
+    <button onClick="document.dispatchEvent(new CustomEvent('back_clicked'))">Back</button>
+    <button onClick="document.dispatchEvent(new CustomEvent('save_clicked'))">Save</button>
+    <button onClick="document.dispatchEvent(new CustomEvent('load_clicked'))">Load</button>
     <button onclick="window.close()">Exit</button>
 </div>
