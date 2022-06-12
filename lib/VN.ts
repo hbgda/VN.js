@@ -1,7 +1,9 @@
 import { app, BrowserWindow } from "electron";
 import path = require("path")
 
-export class Scene {
+import { Character } from "./Character";
+
+export class VN {
     electronInstance: BrowserWindow
     height: number
     width: number
@@ -10,7 +12,7 @@ export class Scene {
     constructor(opts: SceneInitOptions) {
         this.height = opts.height
         this.width = opts.width
-        this.backgroundColor = opts.backgroundColor
+        this.backgroundColor = opts.backgroundColor || "white"
     }
 
     async init() {
@@ -33,11 +35,15 @@ export class Scene {
     }
 
     async setBaseProperties(opts: SceneInitOptions, animate: boolean = false) {
-        this.electronInstance.setBackgroundColor(opts.backgroundColor)
+        this.electronInstance.setBackgroundColor(opts.backgroundColor || this.backgroundColor)
         this.electronInstance.setSize(opts.width, opts.height, animate)
     }
 
     async setScreenPosition(x: number, y: number, animate = false) {
         this.electronInstance.setPosition(x, y, animate)
+    }
+
+    createCharacter(name: string) {
+        return new Character(name, this)
     }
 }

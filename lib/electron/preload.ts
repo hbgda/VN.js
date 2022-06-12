@@ -14,4 +14,10 @@ window.addEventListener("DOMContentLoaded", () => {
     const qm = new QuickMenu(document.body)
     
     const q = new QuickOptions(document.body, t, qm)
+
+    document.addEventListener("toggle_ui", (e: CustomEvent) => {
+        t.element.style.display = e.detail.enabled ? "block" : "none"
+        q.element.style.display = e.detail.enabled ? "block" : "none"
+        qm.toggle()
+    })
 })

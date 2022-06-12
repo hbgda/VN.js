@@ -4,7 +4,7 @@ import { Component } from '../../../lib/Component'
 export class TextBox extends Component {
     charName: string
     texts: string[]
-    textIndex: number = 0
+    textIndex: number = -1
 
     nameField: HTMLHeadingElement
     textField: HTMLParagraphElement
@@ -17,18 +17,6 @@ export class TextBox extends Component {
         super("TextBox", "textbox_component", parent)
         this.nameField = this.element.querySelector(".name > p")
         this.textField = this.element.querySelector(".text")
-
-        //let clickHandler = document.createElement("div")
-        //clickHandler.setAttribute("style", `
-        //    position: absolute;
-        //    width: 100vw;
-        //    height: 100vh;
-        //    z-index: 2;
-        //    top: 0;
-        //    left: 0;
-        //`)
-        //clickHandler.addEventListener("click", () => this.next())
-        //document.body.prepend(clickHandler)
 
         document.addEventListener("click", (e) => {
             if(!(e.target as HTMLElement).classList.contains("interactable")
@@ -44,14 +32,25 @@ export class TextBox extends Component {
         this.texts = texts
 
         this.nameField.textContent = this.charName
-        this.textIndex = 0
+        this.textIndex = -1
         this.next()
+    }
+
+    back() {
+        if(!this.texts || this.textIndex <= 0) 
+            return
+
+        clearInterval(this.addTextInterval)
+        this.textIndex--
+        this.textField.textContent = this.texts[this.textIndex]
+        this.isWriting = false
     }
 
     next() {
         if(!this.texts || this.textIndex >= this.texts.length) 
             return
         
+            
         if(this.isWriting) {
             clearInterval(this.addTextInterval)
             this.textField.textContent = this.texts[this.textIndex]
@@ -59,7 +58,9 @@ export class TextBox extends Component {
             this.textIndex += 1
             return
         }
-
+            
+        this.textIndex += 1
+            
         let idx = 0
         this.textField.textContent = ""
         this.isWriting = true
@@ -68,7 +69,6 @@ export class TextBox extends Component {
             idx++
             if (idx >= this.texts[this.textIndex].length) {
                 clearInterval(this.addTextInterval)
-                this.textIndex += 1
                 this.isWriting = false
             }
         }, this.addTextDelay)

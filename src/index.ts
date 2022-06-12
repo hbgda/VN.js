@@ -1,11 +1,13 @@
-import { Scene } from "../lib/Scene";
+import { VN } from "../lib/VN";
 
 async function start() {
-    const x = new Scene({
+    const vn = new VN({
         height: 720,
         width: 1280,
         backgroundColor: "white"
     })
-    await x.init()
+
+
+    await vn.init()
 }
 start()
