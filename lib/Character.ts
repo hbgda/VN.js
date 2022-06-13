@@ -10,6 +10,6 @@ export class Character {
     }
 
     say(text: string) {
-        
+        this.vn.loadedPathData.characterText.push({name: this.name, text})
     }
 }

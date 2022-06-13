@@ -8,7 +8,11 @@ export class QuickOptions extends Component {
 
         // Menu
         this.element.children.item(0).addEventListener("click", () => {
-            quickMenu.toggle()
+            document.dispatchEvent(new CustomEvent("toggle_ui", {
+                detail: {
+                    enabled: false
+                }
+            }))
         })
 
         // Back

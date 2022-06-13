@@ -1,7 +1,10 @@
 import type { Character } from '../lib/Character'
 
-export function Intro(chars: {
+export default function Intro(chars: {
     [key: string]: Character
-}) {
-    
+},
+    setScene: Function
+) {
+    setScene("gen")
+    chars["test"].say("Test")
 }

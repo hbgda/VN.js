@@ -5,19 +5,25 @@ import { TextBox } from '../../html/components/TextBox/TextBox'
 import { QuickOptions } from '../../html/components/QuickOptions/QuickOptions'
 import { QuickMenu } from '../../html/components/QuickMenu/QuickMenu'
 
+import { ipcRenderer } from 'electron'
+
 window.addEventListener("DOMContentLoaded", () => {
     const t: TextBox = new TextBox(document.body)
-    t.setText("Mr White", [
-        "Jesse, I have ligma...",
-        "Ligma balls lmao rolled"
-    ])
     const qm = new QuickMenu(document.body)
-    
     const q = new QuickOptions(document.body, t, qm)
+
+    const sceneImage = document.querySelector(".scene-image") as HTMLImageElement
 
     document.addEventListener("toggle_ui", (e: CustomEvent) => {
         t.element.style.display = e.detail.enabled ? "block" : "none"
         q.element.style.display = e.detail.enabled ? "block" : "none"
         qm.toggle()
+    })
+
+    ipcRenderer.send("load-path", "intro")
+    ipcRenderer.on("load-path-reply", (event, args) => {
+        console.log(event, args)
+        sceneImage.src = args["scene"]
+        t.setText(args["characterText"][0].name, [args["characterText"][0].text])
     })
 })
