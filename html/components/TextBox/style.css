@@ -45,14 +45,11 @@
 .textbox_component .text {
     padding: 0 20px;
     margin: 0;
-    max-width: calc(100% - 20px);
+    max-width: calc(100% - 40px);
     width: 100%;
     position: absolute;
     bottom: 0;
     height: calc(80% - 5px);
     background-color: transparent;
-    overflow : hidden;
-    text-overflow: ellipsis;
-    -webkit-line-clamp: 6;
-    -webkit-box-orient: vertical;
+    word-wrap: break-word;
 }

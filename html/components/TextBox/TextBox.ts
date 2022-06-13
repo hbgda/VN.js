@@ -3,7 +3,7 @@ import { Component } from '../../../lib/Component'
 
 export class TextBox extends Component {
     charName: string
-    texts: string[]
+    text: string
     textIndex: number = -1
 
     nameField: HTMLHeadingElement
@@ -12,6 +12,9 @@ export class TextBox extends Component {
     addTextInterval: NodeJS.Timer
     addTextDelay: number = 50
     isWriting: boolean = false
+
+    data: Array<{name: string, text: string}> = []
+    dataIndex: number = -1
 
     constructor(parent: HTMLElement) {
         super("TextBox", "textbox_component", parent)
@@ -27,47 +30,57 @@ export class TextBox extends Component {
         })
     }
 
-    setText(name: string, texts: string[]) {
-        this.charName = name
-        this.texts = texts
-
-        this.nameField.textContent = this.charName
-        this.textIndex = -1
+    setData(texts: [{name: string, text: string}]) {
+        console.log(texts)
+        this.data = texts
+        this.dataIndex = -1
         this.next()
     }
 
+    // setText(name: string, text: string) {
+    //     this.charName = name
+    //     this.text = text
+
+    //     this.nameField.textContent = this.charName
+    //     this.textIndex = -1
+    //     this.next()
+    // }
+
     back() {
-        if(!this.texts || this.textIndex <= 0) 
+        if(!this.data || this.dataIndex <= 0) 
             return
 
         clearInterval(this.addTextInterval)
-        this.textIndex--
-        this.textField.textContent = this.texts[this.textIndex]
+        this.dataIndex--
+        this.nameField.textContent = this.data[this.dataIndex].name
+        this.textField.textContent = this.data[this.dataIndex].text
         this.isWriting = false
     }
 
     next() {
-        if(!this.texts || this.textIndex >= this.texts.length) 
+        if(!this.data || this.dataIndex >= this.data.length) 
             return
         
             
         if(this.isWriting) {
             clearInterval(this.addTextInterval)
-            this.textField.textContent = this.texts[this.textIndex]
+            this.textField.textContent = this.data[this.dataIndex].text
             this.isWriting = false
             this.textIndex += 1
             return
         }
             
-        this.textIndex += 1
+        this.dataIndex += 1
+
+        console.log(this.data[this.dataIndex])
             
         let idx = 0
         this.textField.textContent = ""
         this.isWriting = true
         this.addTextInterval = setInterval(() => {
-            this.textField.textContent += this.texts[this.textIndex][idx]
+            this.textField.textContent += this.data[this.dataIndex].text[idx]
             idx++
-            if (idx >= this.texts[this.textIndex].length) {
+            if(idx >= this.data[this.dataIndex].text.length) {
                 clearInterval(this.addTextInterval)
                 this.isWriting = false
             }

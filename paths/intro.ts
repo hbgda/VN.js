@@ -6,5 +6,5 @@ export default function Intro(chars: {
     setScene: Function
 ) {
     setScene("gen")
-    chars["test"].say("Test")
+    chars["test"].say("TestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTest")
 }

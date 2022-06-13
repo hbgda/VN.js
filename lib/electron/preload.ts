@@ -24,6 +24,6 @@ window.addEventListener("DOMContentLoaded", () => {
     ipcRenderer.on("load-path-reply", (event, args) => {
         console.log(event, args)
         sceneImage.src = args["scene"]
-        t.setText(args["characterText"][0].name, [args["characterText"][0].text])
+        t.setData(args["characterText"])
     })
 })
