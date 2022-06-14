@@ -13,7 +13,7 @@ export class TextBox extends Component {
     addTextDelay: number = 50
     isWriting: boolean = false
 
-    data: Array<{name: string, text: string}> = []
+    data: Array<{name: string, text: string, characterState?: string}> = []
     dataIndex: number = -1
 
     constructor(parent: HTMLElement) {
@@ -30,7 +30,7 @@ export class TextBox extends Component {
         })
     }
 
-    setData(texts: [{name: string, text: string}]) {
+    setData(texts: [{name: string, text: string, characterState?: string}]) {
         console.log(texts)
         this.data = texts
         this.dataIndex = -1
@@ -75,12 +75,18 @@ export class TextBox extends Component {
         console.log(this.data[this.dataIndex])
             
         let idx = 0
+        let name = this.data[this.dataIndex].name
+        let text = this.data[this.dataIndex].text
+        let state = this.data[this.dataIndex].characterState
+        this.nameField.textContent = name
         this.textField.textContent = ""
+        let charImg = document.querySelector(`#char_${name} > img`) as HTMLImageElement
+        charImg.src = state
         this.isWriting = true
         this.addTextInterval = setInterval(() => {
-            this.textField.textContent += this.data[this.dataIndex].text[idx]
+            this.textField.textContent += text[idx]
             idx++
-            if(idx >= this.data[this.dataIndex].text.length) {
+            if(idx >= text.length) {
                 clearInterval(this.addTextInterval)
                 this.isWriting = false
             }

@@ -50,7 +50,7 @@ export class VN {
             if (this.pathData[pathName]) {
                 this.loadedPathData = {scene: this.loadedPathData.scene, characterText: []}
                 this.pathData[pathName].run(this.characters, (scene: string) => {
-                    this.loadedPathData.scene = path.join(this.assetPath, scene + ".jpg")
+                    this.loadedPathData.scene = path.join(this.assetPath, "scenes", scene + ".jpg")
                 })
                 event.reply("load-path-reply", this.loadedPathData)
             }

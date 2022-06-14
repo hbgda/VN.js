@@ -10,6 +10,7 @@ async function start() {
 
     vn.loadPaths()
     vn.createCharacter("test")
+    vn.createCharacter("test2")
 
     await vn.init()
 }

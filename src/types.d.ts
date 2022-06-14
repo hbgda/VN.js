@@ -6,5 +6,5 @@ interface SceneInitOptions {
 
 interface LoadedPathData {
     scene: string,
-    characterText: Array<{name: string, text: string}>
+    characterText: Array<{name: string, text: string, characterState?: string}>
 }
