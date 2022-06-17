@@ -1,5 +1,4 @@
 // Node and browser
-import { loadComponent } from '../../html/scripts/loader'
 
 import { TextBox } from '../../html/components/TextBox/TextBox' 
 import { QuickOptions } from '../../html/components/QuickOptions/QuickOptions'
