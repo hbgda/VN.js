@@ -17,7 +17,7 @@ export class QuickOptions extends Component {
 
         // Back
         this.element.children.item(1).addEventListener("click", () => {
-            textBox.back()
+            //textBox.back()
         })
 
         // Save

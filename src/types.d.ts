@@ -8,13 +8,31 @@ interface LoadedPathData {
     
 }
 
+
+interface TextEventData {
+    name: string
+    text: string
+}
+interface CharacterStateEventData {
+    name: string
+    state: string
+}
+interface SceneImageEventData {
+    sceneImage: string
+}
 interface ChoiceOption {
     text: string,
     branch?: string
 }
+interface ChoiceEventData {
+    options: ChoiceOption[]
+}
+interface PromptEventData {
+    prompt: string
+}
 
-type SceneEventType = "text"                       | "characterState"              | "scene"           | "choice"                  | "prompt" 
-type SceneEventData = {name: string, text: string} | {name: string, state: string} | {sceneId: string} | {options: ChoiceOption[]} | {prompt: string}
+type SceneEventType = "text"        | "characterState"        | "scene"             | "choice"        | "prompt" 
+type SceneEventData = TextEventData | CharacterStateEventData | SceneImageEventData | ChoiceEventData | PromptEventData
 
 interface SceneEvent {
     type: SceneEventType,

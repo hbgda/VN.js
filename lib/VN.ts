@@ -23,7 +23,12 @@ export class VN {
     pathDataHandler: PathDataHandler = {
         characters: {},
         setScene: (scene: string): void => {
-            throw new Error("Function not implemented.");
+            this.loadedPathData.push({
+                type: "scene",
+                data: {
+                    sceneImage: `${this.assetPath}/scenes/${scene}.jpg`
+                }
+            })
         },
         declareBranch: (id: string, path: PathFunction): void => {
             this.branchingPaths[id] = path
@@ -77,10 +82,10 @@ export class VN {
             this.branchingPaths = {}
             
             branch(this.pathDataHandler)
-            event.reply("load-branch-reply", this.loadedPathData)
+            event.returnValue = this.loadedPathData
         }
         else {
-            event.reply("load-branch-reply", "Invalid branch.")
+            event.returnValue = "Invalid branch."
         }
     }
 
@@ -89,10 +94,10 @@ export class VN {
             this.loadedPathData = []
 
             this.pathData[pathName].run(this.pathDataHandler)
-            event.reply("load-path-reply", this.loadedPathData)
+            event.returnValue = this.loadedPathData
         }
         else {
-            event.reply("load-path-reply", "Invalid path.")
+            event.returnValue = "Invalid path."
         }
     }
 
