@@ -6,6 +6,8 @@ import { QuickMenu } from '../../html/components/QuickMenu/QuickMenu'
 import { Character } from '../../html/components/Character/Character'
 import { SceneState } from '../../html/components/SceneState/SceneState'
 import { CharacterHandler } from '../../html/components/CharacterHandler/CharacterHandler'
+import { ChoicePrompt } from '../../html/components/ChoicePrompt/ChoicePrompt'
+
 
 import { ipcRenderer } from 'electron'
 
@@ -15,8 +17,9 @@ window.addEventListener("DOMContentLoaded", () => {
     const quickOptions = new QuickOptions(document.body, textBox, quickMenu)
     const sceneImage = document.querySelector(".scene-image") as HTMLImageElement
     const charHandler = new CharacterHandler()
+    const choicePrompt = new ChoicePrompt(document.body)
     
-    const sceneState = new SceneState(sceneImage, textBox, charHandler)
+    const sceneState = new SceneState(sceneImage, textBox, charHandler, choicePrompt, quickOptions, quickMenu)
 
     document.addEventListener("toggle_ui", (e: CustomEvent) => {
         textBox.element.style.display = e.detail.enabled ? "block" : "none"

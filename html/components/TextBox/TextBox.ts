@@ -13,8 +13,8 @@ export class TextBox extends Component {
     addTextDelay: number = 50
     isWriting: boolean = false
 
-    data: Array<{name: string, text: string, characterState?: string}> = []
-    dataIndex: number = -1
+    // data: Array<{name: string, text: string, characterState?: string}> = []
+    // dataIndex: number = -1
 
     constructor(parent: HTMLElement) {
         super("TextBox", "textbox_component", parent)
@@ -28,7 +28,8 @@ export class TextBox extends Component {
         this.textField.textContent = this.text
     }
 
-    setText(name: string, text: string) {
+    write(name: string, text: string) {
+        this.charName = name
         this.text = text
         this.nameField.textContent = name
         this.textField.textContent = ""

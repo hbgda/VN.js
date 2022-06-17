@@ -1,4 +1,7 @@
 import type { CharacterHandler } from "../CharacterHandler/CharacterHandler";
+import type { ChoicePrompt } from "../ChoicePrompt/ChoicePrompt";
+import type { QuickMenu } from "../QuickMenu/QuickMenu";
+import type { QuickOptions } from "../QuickOptions/QuickOptions";
 import type { TextBox } from "../TextBox/TextBox";
 
 export class SceneState {
@@ -7,14 +10,31 @@ export class SceneState {
 
     textBox: TextBox
     characterHandler: CharacterHandler
+    choicePrompt: ChoicePrompt
+    quickOptions: QuickOptions
+    quickMenu: QuickMenu
 
     sceneEventData: SceneEvent[] = []
     eventIndex: number = -1
 
-    constructor(sceneImg: HTMLImageElement, textBox: TextBox, charHandler: CharacterHandler) {
+    blockProgression: boolean = false
+
+    constructor(
+        sceneImg: HTMLImageElement, 
+        textBox: TextBox, 
+        charHandler: CharacterHandler,
+        choicePrompt: ChoicePrompt,
+        quickOptions: QuickOptions,
+        quickMenu: QuickMenu
+        ) {
         this.sceneImageElement = sceneImg
         this.textBox = textBox
         this.characterHandler = charHandler
+        this.choicePrompt = choicePrompt
+        this.quickOptions = quickOptions
+        this.quickMenu = quickMenu
+
+        this.quickOptions.setBackFunction(() => this.previous())
 
         document.addEventListener("click", (e) => {
             if(!(e.target as HTMLElement).classList.contains("interactable")
@@ -31,26 +51,27 @@ export class SceneState {
     }
 
     setData(data: SceneEvent[]) {
+        this.blockProgression = false
+        this.eventIndex = -1
         this.sceneEventData = data
     }
 
     next() {
-        if (this.eventIndex >= this.sceneEventData.length) 
+        if (this.eventIndex >= this.sceneEventData.length - 1 || this.blockProgression) 
             return
 
         this.eventIndex++
-        this.currentEvent()
+        this.processEvent(this.sceneEventData[this.eventIndex])
     }
     previous() {
-        if (this.eventIndex <= 0)
+        if (this.eventIndex <= 0 || this.blockProgression)
             return
 
         this.eventIndex--
-        this.currentEvent()
+        this.processEvent(this.sceneEventData[this.eventIndex])
     }
 
-    currentEvent() {
-        let event = this.sceneEventData[this.eventIndex]
+    processEvent(event: SceneEvent) {
         switch (event.type) {
             case "text":
                 this.textEvent(event.data as TextEventData)
@@ -68,6 +89,9 @@ export class SceneState {
             case "prompt":
                 this.promptEvent(event.data as PromptEventData)
                 break
+            case "path":
+                this.pathEvent(event.data as PathEventData)
+                break
             default:
                 console.error("Invalid event type " + event.type)
                 break    
@@ -75,7 +99,7 @@ export class SceneState {
     }
 
     textEvent(data: TextEventData) {
-        this.textBox.setText(data.name, data.text)
+        this.textBox.write(data.name, data.text)
     }
     characterStateEvent(data: CharacterStateEventData) {
 
@@ -88,10 +112,22 @@ export class SceneState {
         this.sceneImageElement.src = this.sceneImageSrc
     }
     choiceEvent(data: ChoiceEventData) {
-
+        this.blockProgression = true
+        this.choicePrompt.prompt(data)
+        document.addEventListener("choice_selected", (e: CustomEvent) => {
+            let idx = e.detail.selectedIndex
+            let event = data.options[idx].event
+            console.log(idx, event)
+            if (event) {
+                this.processEvent(event)
+            }
+            this.blockProgression = false
+        })
     }
     promptEvent(data: PromptEventData) {
         console.log("Unimplemented promptEvent")
     }
+    pathEvent(data: PathEventData) {
 
+    }
 }

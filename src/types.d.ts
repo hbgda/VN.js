@@ -4,11 +4,6 @@ interface SceneInitOptions {
     backgroundColor?: string
 }
 
-interface LoadedPathData {
-    
-}
-
-
 interface TextEventData {
     name: string
     text: string
@@ -22,17 +17,21 @@ interface SceneImageEventData {
 }
 interface ChoiceOption {
     text: string,
-    branch?: string
+    event?: SceneEvent
 }
 interface ChoiceEventData {
+    prompt: string
     options: ChoiceOption[]
 }
 interface PromptEventData {
     prompt: string
 }
+interface PathEventData {
+    pathName: string
+}
 
-type SceneEventType = "text"        | "characterState"        | "scene"             | "choice"        | "prompt" 
-type SceneEventData = TextEventData | CharacterStateEventData | SceneImageEventData | ChoiceEventData | PromptEventData
+type SceneEventType = "text"        | "characterState"        | "scene"             | "choice"        | "prompt"        | "path"
+type SceneEventData = TextEventData | CharacterStateEventData | SceneImageEventData | ChoiceEventData | PromptEventData | PathEventData
 
 interface SceneEvent {
     type: SceneEventType,
@@ -50,7 +49,7 @@ interface PathFunction {
 interface PathDataHandler {
     setScene(scene: string): void,
     declareBranch(id: string, path: PathFunction): void,
-    choice(opts: ChoiceOption[]): void
+    choice(prompt: string, opts: ChoiceOption[]): void
 
     characters: {[key: string]: Character}
 

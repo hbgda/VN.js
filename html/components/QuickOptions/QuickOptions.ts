@@ -24,4 +24,10 @@ export class QuickOptions extends Component {
 
         // Load
     }
+
+    setBackFunction(func: Function) {
+        this.element.children.item(1).addEventListener("click", () => {
+            func()
+        })
+    }
 }

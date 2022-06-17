@@ -16,7 +16,7 @@ export class VN {
     pathData: {[key: string]: {run: PathFunction}} = {}
 
     loadedPathData: SceneEvent[]
-    branchingPaths: {[key: string]: PathFunction}
+    branchingPaths: {[key: string]: PathFunction} = {}
 
     assetPath: string
 
@@ -33,8 +33,14 @@ export class VN {
         declareBranch: (id: string, path: PathFunction): void => {
             this.branchingPaths[id] = path
         },
-        choice: (opts: ChoiceOption[]): void => {
-            throw new Error("Function not implemented.");
+        choice: (prompt: string, options: ChoiceOption[]): void => {
+            this.loadedPathData.push({
+                type: "choice",
+                data: {
+                    prompt,
+                    options
+                }
+            })
         },
         prompt: (prompt: string): void => {
             throw new Error("Function not implemented.");
@@ -75,7 +81,7 @@ export class VN {
         ipcMain.on("load-branch", (event, arg) => this.loadBranch(event, arg))
     }
 
-    loadBranch(event: IpcMainEvent, branchId: string) {
+    private loadBranch(event: IpcMainEvent, branchId: string) {
         let branch = this.branchingPaths[branchId]
         if(branch) {
             this.loadedPathData = []
@@ -89,7 +95,7 @@ export class VN {
         }
     }
 
-    loadPath(event: IpcMainEvent, pathName: string) {
+    private loadPath(event: IpcMainEvent, pathName: string) {
         if (this.pathData[pathName]) {
             this.loadedPathData = []
 
