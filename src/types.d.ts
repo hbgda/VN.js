@@ -28,6 +28,7 @@ interface PromptEventData {
 }
 interface PathEventData {
     pathName: string
+    branch?: boolean
 }
 
 type SceneEventType = "text"        | "characterState"        | "scene"             | "choice"        | "prompt"        | "path"

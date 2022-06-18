@@ -22,7 +22,8 @@ export default function Intro(handler: PathDataHandler) {
             event: {
                 type: "path",
                 data: {
-                    pathName: "branch_no"
+                    pathName: "branch_no",
+                    branch: true
                 }
             }
         }

@@ -29,6 +29,9 @@ export class TextBox extends Component {
     }
 
     write(name: string, text: string) {
+        if(this.isWriting) {
+            this.finishWrite()
+        }
         this.charName = name
         this.text = text
         this.nameField.textContent = name

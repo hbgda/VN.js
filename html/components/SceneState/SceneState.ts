@@ -37,8 +37,9 @@ export class SceneState {
         this.quickOptions.setBackFunction(() => this.previous())
 
         document.addEventListener("click", (e) => {
-            if(!(e.target as HTMLElement).classList.contains("interactable")
-                && !(e.target as HTMLElement).closest(".interactable")
+            if((   !(e.target as HTMLElement).classList.contains("interactable")
+                && !(e.target as HTMLElement).closest(".interactable"))
+                && !this.blockProgression
             ) {
                 if(this.textBox.isWriting) {
                     this.textBox.finishWrite()
@@ -67,11 +68,15 @@ export class SceneState {
         if (this.eventIndex <= 0 || this.blockProgression)
             return
 
+        if(this.textBox.isWriting) {
+            this.textBox.finishWrite()
+        }
         this.eventIndex--
         this.processEvent(this.sceneEventData[this.eventIndex])
     }
 
     processEvent(event: SceneEvent) {
+        console.log(event)
         switch (event.type) {
             case "text":
                 this.textEvent(event.data as TextEventData)
@@ -118,7 +123,7 @@ export class SceneState {
             let idx = e.detail.selectedIndex
             let event = data.options[idx].event
             console.log(idx, event)
-            if (event) {
+            if (event != undefined) {
                 this.processEvent(event)
             }
             this.blockProgression = false
@@ -128,6 +133,11 @@ export class SceneState {
         console.log("Unimplemented promptEvent")
     }
     pathEvent(data: PathEventData) {
-
+        document.dispatchEvent(new CustomEvent("load_path", {
+            detail: {
+                pathName: data.pathName, 
+                branch: data.branch || false
+            }
+        }))
     }
 }

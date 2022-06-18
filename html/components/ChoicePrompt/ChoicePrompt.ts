@@ -16,7 +16,8 @@ export class ChoicePrompt extends Component {
         let optElements = data.options.map((opt, i) => {
             const btn = document.createElement("button")
             btn.textContent = opt.text
-            btn.addEventListener("click", () => {
+            btn.addEventListener("click", (e) => {
+                e.stopPropagation()
                 document.dispatchEvent(new CustomEvent("choice_selected", {detail: {selectedIndex: i}}))
                 this.promptText.textContent = ""
                 this.optionsContainer.innerHTML = ""

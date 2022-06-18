@@ -8,8 +8,13 @@ import { SceneState } from '../../html/components/SceneState/SceneState'
 import { CharacterHandler } from '../../html/components/CharacterHandler/CharacterHandler'
 import { ChoicePrompt } from '../../html/components/ChoicePrompt/ChoicePrompt'
 
-
 import { ipcRenderer } from 'electron'
+
+
+function loadPath(pathName: string, branch: boolean = false): SceneEvent[] {
+    const data = ipcRenderer.sendSync(branch ? "load-branch" : "load-path", pathName)
+    return (typeof data === "string" ? [] : data)
+}
 
 window.addEventListener("DOMContentLoaded", () => {
     const textBox = new TextBox(document.body)
@@ -27,9 +32,14 @@ window.addEventListener("DOMContentLoaded", () => {
         quickMenu.toggle()
     })
 
-    let data = ipcRenderer.sendSync("load-path", "intro")
-    console.log(data)
-    
+    document.addEventListener("load_path", (e: CustomEvent) => {
+        const { pathName, branch } = e.detail
+        let data = loadPath(pathName, branch)
+        sceneState.setData(data)
+        sceneState.next()
+    })
+
+    let data = loadPath("intro")
     sceneState.setData(data)
     sceneState.next()
 
