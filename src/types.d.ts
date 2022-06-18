@@ -9,7 +9,7 @@ interface TextEventData {
     text: string
 }
 interface CharacterStateEventData {
-    name: string
+    charName: string
     state: string
 }
 interface SceneImageEventData {

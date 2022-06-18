@@ -76,7 +76,6 @@ export class SceneState {
     }
 
     processEvent(event: SceneEvent) {
-        console.log(event)
         switch (event.type) {
             case "text":
                 this.textEvent(event.data as TextEventData)
@@ -118,12 +117,8 @@ export class SceneState {
     }
     choiceEvent(data: ChoiceEventData) {
         this.blockProgression = true
-        this.choicePrompt.prompt(data)
-        document.addEventListener("choice_selected", (e: CustomEvent) => {
-            let idx = e.detail.selectedIndex
-            let event = data.options[idx].event
-            console.log(idx, event)
-            if (event != undefined) {
+        this.choicePrompt.prompt(data, (event: SceneEvent) => {
+            if (event) {
                 this.processEvent(event)
             }
             this.blockProgression = false

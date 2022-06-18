@@ -3,6 +3,7 @@ import path = require("path")
 import fs = require("fs")
 
 import { Character } from "./Character";
+import { createChoiceEvent, createSceneImageEvent } from "./Event";
 
 export class VN {
     _init: boolean = false
@@ -23,24 +24,13 @@ export class VN {
     pathDataHandler: PathDataHandler = {
         characters: {},
         setScene: (scene: string): void => {
-            this.loadedPathData.push({
-                type: "scene",
-                data: {
-                    sceneImage: `${this.assetPath}/scenes/${scene}.jpg`
-                }
-            })
+            this.loadedPathData.push(createSceneImageEvent(`${this.assetPath}/scenes/${scene}.jpg`))
         },
         declareBranch: (id: string, path: PathFunction): void => {
             this.branchingPaths[id] = path
         },
         choice: (prompt: string, options: ChoiceOption[]): void => {
-            this.loadedPathData.push({
-                type: "choice",
-                data: {
-                    prompt,
-                    options
-                }
-            })
+            this.loadedPathData.push(createChoiceEvent(prompt, options))
         },
         prompt: (prompt: string): void => {
             throw new Error("Function not implemented.");

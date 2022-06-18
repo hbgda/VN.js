@@ -10,7 +10,7 @@ export class ChoicePrompt extends Component {
         this.optionsContainer = this.element.querySelector(".options") as HTMLDivElement
     }
 
-    prompt(data: ChoiceEventData) {
+    prompt(data: ChoiceEventData, cb: Function) {
         // console.log(data)
         this.promptText.textContent = data.prompt
         let optElements = data.options.map((opt, i) => {
@@ -18,7 +18,8 @@ export class ChoicePrompt extends Component {
             btn.textContent = opt.text
             btn.addEventListener("click", (e) => {
                 e.stopPropagation()
-                document.dispatchEvent(new CustomEvent("choice_selected", {detail: {selectedIndex: i}}))
+                //document.dispatchEvent(new CustomEvent("choice_selected", {detail: {selectedIndex: i}}))
+                cb(opt.event || undefined)
                 this.promptText.textContent = ""
                 this.optionsContainer.innerHTML = ""
                 this.element.style.display = "none"

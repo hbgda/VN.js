@@ -13,7 +13,6 @@
     color: white;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     padding: 10px;
-    font-size: 15pt;
 }
 .choice-prompt .options {
     padding: 10px;
@@ -28,5 +27,11 @@
     width: 100%;
     color: white;
     background-color: transparent;
-    border: 1px white solid
+    border: 1px white solid;
+    transition: all .2s;
+}
+
+.choice-prompt button:hover {
+    background-color: rgba(200, 200, 200, 0.4);
+    cursor: pointer;
 }

@@ -1,3 +1,5 @@
+import { createPathEvent, createTextEvent } from "../lib/Event"
+
 export default function Intro(handler: PathDataHandler) {
     handler.setScene("gen")
     handler.declareBranch("branch_no", branch_No)
@@ -9,23 +11,23 @@ export default function Intro(handler: PathDataHandler) {
     handler.choice("Testing?", [
         {
             text: "Yes",
-            event: {
-                type: "text",
-                data: {
-                    name: "test",
-                    text: "test choice test"
-                }
-            }
+            event: createTextEvent("Test", "test choice test")
         },
         {
             text: "No",
-            event: {
-                type: "path",
-                data: {
-                    pathName: "branch_no",
-                    branch: true
-                }
-            }
+            event: createPathEvent("branch_no", true)
+        }
+    ])
+
+    chars["test2"].say("Switch to new path?")
+    handler.choice("Switch to new path?", [
+        {
+            text: "Yes",
+            event: createPathEvent("test")
+        },
+        {
+            text: "No",
+            event: createTextEvent("Test", "Didn't switch path!")
         }
     ])
 }
