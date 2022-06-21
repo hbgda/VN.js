@@ -16,11 +16,11 @@ export function createPathEvent(pathName: string, branch: boolean = false): Scen
     }
 }
 
-export function createCharacterStateEvent(charName: string, state: string): SceneEvent {
+export function createCharacterStateEvent(charName: string, state: string, replace: boolean = false): SceneEvent {
     return {
         type: "characterState",
         data: {
-            charName, state
+            charName, state, replace
         }
     }
 }

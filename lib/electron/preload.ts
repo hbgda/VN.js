@@ -16,14 +16,21 @@ function loadPath(pathName: string, branch: boolean = false): SceneEvent[] {
     return (typeof data === "string" ? [] : data)
 }
 
+function getAssetInfo(): AssetInfo {
+    return ipcRenderer.sendSync("get-asset-info")
+}
+
 window.addEventListener("DOMContentLoaded", () => {
+    const assetInfo = getAssetInfo()
+
     const textBox = new TextBox(document.body)
     const quickMenu = new QuickMenu(document.body)
     const quickOptions = new QuickOptions(document.body, textBox, quickMenu)
+
     const sceneImage = document.querySelector(".scene-image") as HTMLImageElement
-    const charHandler = new CharacterHandler()
-    const choicePrompt = new ChoicePrompt(document.body)
+    const charHandler = new CharacterHandler(assetInfo.characters, assetInfo.assetPath, document.body)
     
+    const choicePrompt = new ChoicePrompt(document.body)
     const sceneState = new SceneState(sceneImage, textBox, charHandler, choicePrompt, quickOptions, quickMenu)
 
     document.addEventListener("toggle_ui", (e: CustomEvent) => {

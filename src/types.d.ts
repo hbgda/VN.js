@@ -4,6 +4,11 @@ interface SceneInitOptions {
     backgroundColor?: string
 }
 
+interface AssetInfo {
+    assetPath: string,
+    characters: string[],
+}
+
 interface TextEventData {
     name: string
     text: string
@@ -11,6 +16,7 @@ interface TextEventData {
 interface CharacterStateEventData {
     charName: string
     state: string
+    replace?: boolean
 }
 interface SceneImageEventData {
     sceneImage: string

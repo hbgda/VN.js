@@ -69,6 +69,12 @@ export class VN {
 
         ipcMain.on("load-path", (event, arg) => this.loadPath(event, arg))
         ipcMain.on("load-branch", (event, arg) => this.loadBranch(event, arg))
+        ipcMain.on("get-asset-info", (event, arg) => {
+            event.returnValue = {
+                assetPath: this.assetPath,
+                characters: Object.keys(this.characters)
+            }
+        })
     }
 
     private loadBranch(event: IpcMainEvent, branchId: string) {

@@ -1,9 +1,8 @@
 .character {
-    height: 100%;
-    object-fit: fill;
-    width: 200px;
+    object-fit: contain;
 }
 
-.character > img {
-    max-width: 200px;
+.character img {
+    width: 100%;
+    height: auto;
 }

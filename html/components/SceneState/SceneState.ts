@@ -82,6 +82,7 @@ export class SceneState {
                 break
             case "characterState":
                 this.characterStateEvent(event.data as CharacterStateEventData)
+                this.next()
                 break
             case "scene":
                 this.sceneImageEvent(event.data as SceneImageEventData)
@@ -106,7 +107,8 @@ export class SceneState {
         this.textBox.write(data.name, data.text)
     }
     characterStateEvent(data: CharacterStateEventData) {
-
+        this.characterHandler.showCharacter(data.charName, data.replace || false)
+        this.characterHandler.setCharacterState(data.charName, data.state)
     }
     sceneImageEvent(data: SceneImageEventData) {
         if (data.sceneImage == this.sceneImageSrc)
